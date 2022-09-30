@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore'
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,} from 'firebase/auth'
 
 
 const firebaseConfig = {
@@ -18,6 +18,8 @@ export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
 export const auth = getAuth();
+
+
 
 export const createUserDocFromAuth = async (userAuth, additional = {}) => {
   if (!userAuth) return;
@@ -41,6 +43,10 @@ export const createUserDocFromAuth = async (userAuth, additional = {}) => {
   return userDocRef;
 }
 
+export const logout =() =>{
+return signOut(auth);
+
+}
 export const emailandpass = async (email, password) => {
   if (!email || !password) return;
   return createUserWithEmailAndPassword(auth, email, password)

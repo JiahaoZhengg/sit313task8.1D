@@ -1,29 +1,29 @@
 import React ,{useState} from "react";
 import './login.css'
 import {Link } from 'react-router-dom';
-import {signemailandpass} from './utils/firebase'
+import {signemailandpass , logout} from './utils/firebase'
 import { useNavigate} from 'react-router-dom'
+
 
 function Login(){
     const history = useNavigate();
+    
+    
     const login =async (event) =>{
         event.preventDefault();
         
         try{ const  response = await signemailandpass (email, password);
+            
             console.log(response)
             history("/")
+            
+           
         }
         catch(error){
-        alert('error in login' , error.message)
-            
+        alert('error in login' , error.message)          
+        } 
+              
         }
-        
-        
-        
-        }
-
-
-
     const [contact, setContact] = useState({
  
         email:'',
@@ -40,6 +40,18 @@ function Login(){
         }
         })
     }
+const signout= async()=>{
+    try {
+     await logout(); 
+     history("/");
+     alert('you are logged out')
+    }
+    catch(e){
+        console.log(e.message)
+    }
+
+
+    }
 
 
 
@@ -47,6 +59,7 @@ function Login(){
 return(
 <div className="login">
 <Link to = '/Sign'><button className="signup">Sign Up</button></Link>
+<button className="signup" onClick={signout}>signout</button>
 
 <h2 style={{float:"left"} } >Your email</h2>
 <input type="text" className="email2" name="email" value={contact.email} onChange={handleChange}></input>
